@@ -1,0 +1,58 @@
+{
+  "name": "IES Tierno Galván",
+  "booksByIsbn": {
+    "23432423": {
+      "isbn": "23432423",
+      "title": "Programación en Java",
+      "author": "Peppa Pig",
+      "genres": [
+        "Informática",
+        "Java",
+        "Programación"
+      ]
+    },
+    "23432422": {
+      "isbn": "23432422",
+      "title": "Programación en Kotlin",
+      "author": "Peppa Pig",
+      "genres": [
+        "Informática",
+        "Kotlin",
+        "Programación"
+      ]
+    }
+  },
+  "customers": [
+    {
+      "nif": "1X",
+      "name": "Bob",
+      "surname": "Esponja",
+      "customerNumber": 1,
+      "zipCode": 28000
+    },
+    {
+      "nif": "2X",
+      "name": "George",
+      "surname": "Pig",
+      "customerNumber": 2,
+      "zipCode": 28001
+    }
+  ],
+  "bookLends": [
+    {
+      "isbn": "23432423",
+      "date": 1710146598169,
+      "nif": "1X"
+    },
+    {
+      "isbn": "23432422",
+      "date": 1710146598169,
+      "nif": "1X"
+    },
+    {
+      "isbn": "23432422",
+      "date": 1710146598169,
+      "nif": "2X"
+    }
+  ]
+}
