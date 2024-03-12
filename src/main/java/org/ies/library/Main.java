@@ -1,26 +1,19 @@
 package org.ies.library;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.ies.library.model.Library;
-
-import java.io.File;
+import org.ies.library.reader.JsonLibraryReader;
+import org.ies.library.reader.Reader;
 
 public class Main {
     public static void main(String[] args) {
+        Reader<Library> libraryReader = new JsonLibraryReader();
 
-        ObjectMapper om = new ObjectMapper();
-        try {
-            Library library = om
-                    .readValue(
-                            new File(Main.class.getResource("/data.json").toURI()),
-                            Library.class
-                    );
-            var books = library.findBooksByGenre("Otro");
-            for (var book: books) {
-                System.out.println(book);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        Library library = libraryReader.read();
+
+        var javaBooks = library.findBooksByGenre("Java");
+        for (var book: javaBooks) {
+            System.out.println(book);
         }
+
     }
 }
