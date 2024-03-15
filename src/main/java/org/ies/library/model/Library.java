@@ -20,16 +20,16 @@ public class Library {
     public Library() {
     }
 
-    public List<Book> findBooksByGenre(String genre) {
+    public List<Book> findBooksByGenre(String genreToFind) {
         List<Book> genreBooks = new ArrayList<>();
-        for (Book book: booksByIsbn.values()) {
+        for (Book book : booksByIsbn.values()) {
 //            ESTA SOLUCIÓN NO ES ÓPTIMA Y ES MÁS DIFÍCIL DE HACER
 //            for(String bookGenre: book.getGenres()) {
 //                if(bookGenre.equals(genre)) {
 //                    genreBooks.add(book);
 //                }
 //            }
-            if(book.getGenres().contains(genre)) {
+            if (book.getGenres().contains(genreToFind)) {
                 genreBooks.add(book);
             }
         }
@@ -37,6 +37,63 @@ public class Library {
         return genreBooks;
     }
 
+    public List<Customer> findZipCodeCustomers(int zipCode) {
+        List<Customer> result = new ArrayList<>();
+        for (Customer customer : customers) {
+            if (customer.getZipCode() == zipCode) {
+                result.add(customer);
+            }
+        }
+        return result;
+    }
+
+    public void addBookLend(String nif, String isbn) {
+        if (existsCustomer(nif) && booksByIsbn.containsKey(isbn)) {
+            bookLends.add(new BookLend(isbn, new Date(), nif));
+        } else {
+            System.out.println("No existe el usuario o el libro");
+        }
+    }
+
+    public boolean existsCustomer(String nif) {
+        for (Customer customer : customers) {
+            if (customer.getNif().equals(nif)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void deleteGenreFromBook(String isbn, String genre) {
+        if (booksByIsbn.containsKey(isbn)) {
+            Book book = booksByIsbn.get(isbn);
+            book.getGenres().remove(genre);
+        } else {
+            System.out.println("No existe el libro");
+        }
+    }
+
+    public boolean customerHasLentBook(int customerNumber, String isbn) {
+        Customer customer = findCusomer(customerNumber);
+        if (customer != null) {
+            for (var bookLend : bookLends) {
+                if (bookLend.getNif().equals(customer.getNif()) && bookLend.getIsbn().equals(isbn)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public Customer findCusomer(int customerNumber) {
+        for (var customer : customers) {
+            if (customer.getCustomerNumber() == customerNumber) {
+                return customer;
+            }
+        }
+        return null;
+    }
 
     public String getName() {
         return name;
