@@ -46,5 +46,9 @@ public class Main {
         if(library.customerHasLentBook(3, "23432423")) {
             System.out.println("Nadie ha tomado prestado Programación en Java");
         }
+
+        System.out.println(library.getBookGenres("23432423"));
+
+        System.out.println(library.findIsbnBookLends("23432423"));
     }
 }

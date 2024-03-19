@@ -74,7 +74,7 @@ public class Library {
     }
 
     public boolean customerHasLentBook(int customerNumber, String isbn) {
-        Customer customer = findCusomer(customerNumber);
+        Customer customer = findCustomer(customerNumber);
         if (customer != null) {
             for (var bookLend : bookLends) {
                 if (bookLend.getNif().equals(customer.getNif()) && bookLend.getIsbn().equals(isbn)) {
@@ -86,13 +86,36 @@ public class Library {
         return false;
     }
 
-    public Customer findCusomer(int customerNumber) {
+    public Customer findCustomer(int customerNumber) {
         for (var customer : customers) {
             if (customer.getCustomerNumber() == customerNumber) {
                 return customer;
             }
         }
         return null;
+    }
+
+    public Set<String> getBookGenres(String isbn) {
+        if(booksByIsbn.containsKey(isbn)) {
+            return booksByIsbn.get(isbn).getGenres();
+        } else {
+            return null;
+        }
+    }
+
+    public List<BookLend> findIsbnBookLends(String isbn) {
+        if(booksByIsbn.containsKey(isbn)) {
+            List<BookLend> isbnBookLends = new ArrayList<>();
+            for(BookLend bookLend: bookLends) {
+                if(bookLend.getIsbn().equals(isbn)) {
+                    isbnBookLends.add(bookLend);
+                }
+            }
+            return isbnBookLends;
+        } else {
+            return null;
+        }
+
     }
 
     public String getName() {
