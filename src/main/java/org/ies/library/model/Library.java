@@ -64,12 +64,15 @@ public class Library {
     }
 
     public boolean existsCustomer(String nif) {
-        for (Customer customer : customers) {
-            if (customer.getNif().equals(nif)) {
-                return true;
-            }
-        }
-        return false;
+//        for (Customer customer : customers) {
+//            if (customer.getNif().equals(nif)) {
+//                return true;
+//            }
+//        }
+//        return false;
+        return customers
+                .stream()
+                .anyMatch(customer -> customer.getNif().equals(nif));
     }
 
     public void deleteGenreFromBook(String isbn, String genre) {
@@ -104,7 +107,7 @@ public class Library {
     }
 
     public Set<String> getBookGenres(String isbn) {
-        if(booksByIsbn.containsKey(isbn)) {
+        if (booksByIsbn.containsKey(isbn)) {
             return booksByIsbn.get(isbn).getGenres();
         } else {
             return null;
@@ -112,10 +115,10 @@ public class Library {
     }
 
     public List<BookLend> findIsbnBookLends(String isbn) {
-        if(booksByIsbn.containsKey(isbn)) {
+        if (booksByIsbn.containsKey(isbn)) {
             List<BookLend> isbnBookLends = new ArrayList<>();
-            for(BookLend bookLend: bookLends) {
-                if(bookLend.getIsbn().equals(isbn)) {
+            for (BookLend bookLend : bookLends) {
+                if (bookLend.getIsbn().equals(isbn)) {
                     isbnBookLends.add(bookLend);
                 }
             }
