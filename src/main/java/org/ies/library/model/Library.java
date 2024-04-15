@@ -1,5 +1,6 @@
 package org.ies.library.model;
 
+import javax.swing.text.html.Option;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -85,25 +86,28 @@ public class Library {
     }
 
     public boolean customerHasLentBook(int customerNumber, String isbn) {
-        Customer customer = findCustomer(customerNumber);
-        if (customer != null) {
-            for (var bookLend : bookLends) {
-                if (bookLend.getNif().equals(customer.getNif()) && bookLend.getIsbn().equals(isbn)) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
+        Optional<Customer> customerOpt = findCustomer(customerNumber);
+        return customerOpt
+                .map(customer -> bookLends
+                        .stream()
+                        .anyMatch(bookLend -> bookLend.getNif().equals(customer.getNif()) && bookLend.getIsbn().equals(isbn))
+                ).orElse(false);
     }
 
-    public Customer findCustomer(int customerNumber) {
-        for (var customer : customers) {
-            if (customer.getCustomerNumber() == customerNumber) {
-                return customer;
-            }
-        }
-        return null;
+    public Optional<Customer> findCustomer(int customerNumber) {
+//        for (var customer : customers) {
+//            if (customer.getCustomerNumber() == customerNumber) {
+//                return customer;
+//            }
+//        }
+//        return null;
+        return customers
+                .stream()
+                // Nos quedamos con el customer cuyo customerNumber sea el que buscamos
+                .filter(customer -> customer.getCustomerNumber() == customerNumber)
+                // Devolvemos el primeroo, si lo hay
+                .findFirst();
+
     }
 
     public Set<String> getBookGenres(String isbn) {
