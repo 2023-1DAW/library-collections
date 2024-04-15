@@ -1,6 +1,7 @@
 package org.ies.library.model;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Library {
     private String name;
@@ -21,30 +22,37 @@ public class Library {
     }
 
     public List<Book> findBooksByGenre(String genreToFind) {
-        List<Book> genreBooks = new ArrayList<>();
-        for (Book book : booksByIsbn.values()) {
-//            ESTA SOLUCIÓN NO ES ÓPTIMA Y ES MÁS DIFÍCIL DE HACER
-//            for(String bookGenre: book.getGenres()) {
-//                if(bookGenre.equals(genre)) {
-//                    genreBooks.add(book);
-//                }
+//        List<Book> genreBooks = new ArrayList<>();
+//        for (Book book : booksByIsbn.values()) {
+////            ESTA SOLUCIÓN NO ES ÓPTIMA Y ES MÁS DIFÍCIL DE HACER
+////            for(String bookGenre: book.getGenres()) {
+////                if(bookGenre.equals(genre)) {
+////                    genreBooks.add(book);
+////                }
+////            }
+//            if (book.getGenres().contains(genreToFind)) {
+//                genreBooks.add(book);
 //            }
-            if (book.getGenres().contains(genreToFind)) {
-                genreBooks.add(book);
-            }
-        }
+//        }
 
-        return genreBooks;
+        return booksByIsbn
+                .values()
+                .stream()
+                .filter(book -> book.getGenres().contains(genreToFind))
+                .collect(Collectors.toList());
     }
 
     public List<Customer> findZipCodeCustomers(int zipCode) {
-        List<Customer> result = new ArrayList<>();
-        for (Customer customer : customers) {
-            if (customer.getZipCode() == zipCode) {
-                result.add(customer);
-            }
-        }
-        return result;
+//        List<Customer> result = new ArrayList<>();
+//        for (Customer customer : customers) {
+//            if (customer.getZipCode() == zipCode) {
+//                result.add(customer);
+//            }
+//        }
+        return customers
+                .stream()
+                .filter(customer -> customer.getZipCode() == zipCode)
+                .collect(Collectors.toList());
     }
 
     public void addBookLend(String nif, String isbn) {

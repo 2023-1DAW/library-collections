@@ -3,7 +3,7 @@ package org.ies.library.model;
 import java.util.Objects;
 import java.util.Set;
 
-public class Book {
+public class Book implements Comparable<Book> {
     private String isbn;
 
     private String title;
@@ -18,6 +18,12 @@ public class Book {
         this.author = author;
         this.genres = genres;
     }
+
+    @Override
+    public int compareTo(Book o) {
+        return this.isbn.compareTo(o.getIsbn());
+    }
+
     public Book(){
 
     }
