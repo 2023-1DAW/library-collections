@@ -115,14 +115,23 @@ public class Library {
     }
 
     public List<BookLend> findIsbnBookLends(String isbn) {
+//        if (booksByIsbn.containsKey(isbn)) {
+//            List<BookLend> isbnBookLends = new ArrayList<>();
+//            for (BookLend bookLend : bookLends) {
+//                if (bookLend.getIsbn().equals(isbn)) {
+//                    isbnBookLends.add(bookLend);
+//                }
+//            }
+//            return isbnBookLends;
+//        } else {
+//            return null;
+//        }
+
         if (booksByIsbn.containsKey(isbn)) {
-            List<BookLend> isbnBookLends = new ArrayList<>();
-            for (BookLend bookLend : bookLends) {
-                if (bookLend.getIsbn().equals(isbn)) {
-                    isbnBookLends.add(bookLend);
-                }
-            }
-            return isbnBookLends;
+            return bookLends
+                    .stream()
+                    .filter(bookLend -> bookLend.getIsbn().equals(isbn))
+                    .collect(Collectors.toList());
         } else {
             return null;
         }
